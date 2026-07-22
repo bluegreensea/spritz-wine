@@ -1,0 +1,28 @@
+--- a/dlls/winex11.drv/window.c
++++ b/dlls/winex11.drv/window.c
+@@ -1245,23 +1245,8 @@
+     /* class hints */
+     if ((class_hints = XAllocClassHint()))
+     {
+-        static char steam_proton[] = "steam_proton";
+-        const char *app_id = getenv("SteamAppId");
+-        char proton_app_class[128];
+-
+-        if(!app_id || !*app_id) {
+-            app_id = getenv("WINE_WMCLASS");
+-        }
+-
+-        if(app_id && *app_id){
+-            snprintf(proton_app_class, sizeof(proton_app_class), "steam_app_%s", app_id);
+-            class_hints->res_name = proton_app_class;
+-            class_hints->res_class = proton_app_class;
+-        }else{
+-            class_hints->res_name = steam_proton;
+-            class_hints->res_class = steam_proton;
+-        }
+-
++        class_hints->res_name = process_name;
++        class_hints->res_class = process_name;
+         XSetClassHint( display, window, class_hints );
+         XFree( class_hints );
+     }
